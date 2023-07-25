@@ -1,0 +1,8 @@
+[package]
+name = "chip-8_Emulator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rand = "0.7"
+minifb = "0.13" 
