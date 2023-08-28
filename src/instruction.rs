@@ -26,3 +26,9 @@ impl Opcode {
         self.0 & 0x0FFF
     }
 } 
+
+impl From<u16> for Opcode {
+    fn from(opcode: u16) -> Opcode {
+        Opcode(opcode)
+    }
+}
