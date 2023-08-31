@@ -53,22 +53,22 @@ pub enum Instruction {
     Add(Register, Register),                                   //
     Sub(Register, Register),                                   //
     ShiftRight(Register),                                      //
-    ReverseSub(Register, Register),                           //
-    ShiftLeft(Register),                                      //
-    SkipIfNotEqualsByte(Register, Register),                  //
-    LoadI(Address),                                           //
-    JumpPlusZero(Address),                                    //
-    Random(Register, u8),                                     //
-    Draw(Register, Register, u8),                             //
-    SkipIfPressed(Register),                                 //
-    SkipIfNotPressed(Register),                               //
-    LoadDelayTimer(Register),                                 //
-    WaitForKeyPress(Register),                                //
-    SetDelayTimer(Register),                                  //
-    SetSoundTimer(Register),                                  //
-    AddToI(Register),                                         //
-    LoadSprite(Register),                                     //
-    BCDRepresentation(Register),                             // 
-    StoreRegisters(Register),                                //
-    LoadRegisters(Register),                                 //
+    ReverseSub(Register, Register),                            //
+    ShiftLeft(Register),                                       //
+    SkipIfNotEqualsByte(Register, Register),                   //
+    LoadI(Address),                                            //
+    JumpPlusZero(Address),                                     //
+    Random(Register, u8),                                      //
+    Draw(Register, Register, u8),                              //
+    SkipIfPressed(Register),                                   //
+    SkipIfNotPressed(Register),                                //
+    LoadDelayTimer(Register),                                  //
+    WaitForKeyPress(Register),                                 //
+    SetDelayTimer(Register),                                   //
+    SetSoundTimer(Register),                                   //
+    AddToI(Register),                                          //
+    LoadSprite(Register),                                      //
+    BCDRepresentation(Register),                               // 
+    StoreRegisters(Register),                                  //
+    LoadRegisters(Register),                                   //
 } 
