@@ -1,3 +1,6 @@
+pub type Address = u16;
+pub type Register = usize;
+
 pub struct Opcode(u16);
 
 impl Opcode {
