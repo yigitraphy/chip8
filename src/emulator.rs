@@ -42,4 +42,19 @@ impl Emulator {
         }
 
         emulator 
-    } 
+    }
+
+    pub fn rom_read<P: AsRef<Path>>(mut self, path: P) -> io::Result<Emulator> {
+        let file = File::open(path)?;
+        for (loc, byte) in file.bytes().enumerate() {
+            self.memory[0x200 + loc] = byte?; 
+        }
+        Ok(self)
+    }
+
+    fn instruction_read(&self) -> Option<Instruction> {
+        let opcode = (self.memory[self.pc as usize] as u16) << 8
+            | (self.memory[(self.pc + 1)as usize] as u16);
+        Instruction::new(opcode)
+    }
+}
