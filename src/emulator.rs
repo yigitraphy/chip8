@@ -52,6 +52,7 @@ impl Emulator {
         Ok(self)
     }
 
+    /// Gets the next OPCODE out of memory and returns a new Instruction
     fn instruction_read(&self) -> Option<Instruction> {
         let opcode = (self.memory[self.pc as usize] as u16) << 8
             | (self.memory[(self.pc + 1)as usize] as u16);
