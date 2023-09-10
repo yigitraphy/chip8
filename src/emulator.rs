@@ -59,3 +59,184 @@ impl Emulator {
         Instruction::new(opcode)
     }
 }
+
+fn instruction_run(&mut self, instruction: Instruction) {
+    self.pc = match instruction {
+        Instruction::ClearDisplay => {
+            self.display.clear();
+            self.pc + 2 
+        }
+        Instruction::Return => {
+            self.pc -= 1;
+            self.stack[self.sp as usize] + 2 
+        }
+        Instruction::Jump(addr) => addr,
+        Instruction::Call(addr) => {
+            self.stack[self.sp as usize] = self.pc as u16;
+            self.sp += 1;
+            addr
+        }
+        Instruction::SkipIfEqualsByte(x, v) => {
+            if self.v[x] == v {
+                self.pc + 4
+            } else {
+                self.pc + 2
+            }
+        }
+        Instruction::SkipIfEqual(x, y) => {
+            if self.v[x] == self.v[y] {
+                self.pc + 4
+            } else {
+                self.pc + 2 
+            }
+        }
+        Instruction::LoadByte(x, v) => {
+            self.v[x] = v;
+            self.pc + 2
+        }
+        Instruction::AddByte(x, v) => {
+            let (res, _) = self.v[x].overflowing_add(v);
+            self.v[x] = res;
+            self.pc + 2 
+        }
+        Instruction::Move(x, y) => {
+            self.v[x] = self.v[y];
+            self.pc + 2
+        }
+        Instruction::Or(x, y) => {
+            self.v[x] |= self.v.[y];
+            self.pc + 2
+        }
+        Instruction::And(x, y) => {
+            self.v[x] &= self.v[y];
+            self.pc + 2
+        }
+        Instruction::Xor(x, y) => {
+            self.v[x] ^= self.v[y];
+            self.pc + 2
+        }
+        Instruction::Add(x, y) => {
+            let (res, overflow) = self.v[x].overflowing_add(self.v[y]);
+            self.v[x] = res;
+            self.v[0x0F] = if overflow { 1 } else { 0 };
+            self.pc + 2
+        }
+        Instruction::Sub(x, y) => {
+            let (res, overflow) = self.v[x].overflowing_sub(self.v[y]);
+            self.v[x] = res;
+            self.v[0x0F] = if overflow { 0 } else { 1 };
+            self.pc + 2
+        }
+        Instruction::ShiftRight(x) => {
+            self.v[0x0F] = self.v[x] & 0x1;
+            self.v[x] >>= 1;
+            self.pc + 2
+        }
+        Instruction::ReverseSub(x, y) => {
+            self.v[0x0F]= if self.v[x] > self.v[y] { 0 } else { 1 };
+            self.v[x] = self.v[y] - self.v[x];
+            self.pc + 2
+        }
+        Instruction::ShiftLeft(x) => {
+            self.v[0x0F] = self.v[x] >> 7;
+            self.v[x] <<= 1;
+            self.pc + 2
+        }
+        Instruction::SkipIfNotEqual(x, y) => {
+            if self.v[x] != self.v[y] {
+                self.pc + 4
+            } else {
+                self.pc + 2 
+            }
+        }
+        Instruction::LoadI(addr) => {
+            self.i = addr;
+            self.pc + 2
+        }
+        Instruction::JumpPlusZero(addr) => addr + (self.v[0] as u16),
+        Instruction::Random(x, val) => {
+            self.v[x] val & rand::random::<u8>();
+            self.pc + 2
+        }
+        Instruction::Draw(x, y, n) => {
+            let from  = self.i as usize;
+            let to = from + n as usize;
+            let x = self.v[x];
+            let y = self.v[y];
+            self.v[0x0F] = self
+                .displey
+                .draw(x as usize, y as usize, &self.memory[from..to]);
+            self.pc + 2
+        }
+        Instruction::SkipIfPressed(x) => {
+            if self 
+                .keyboard 
+                .pressed_key
+                map_or(false, |key| key == self.v[x])
+                {
+                    self.pc + 4
+                } else {
+                    self.pc + 2
+                }
+        } 
+        Instruction::SkipIfNotPressed(x) => {
+            if self
+                .keyboard
+                .pressed_key()
+                .map_or(false, |key| key == self.v[x])
+            {
+                self.pc + 2
+            } else {
+                self.pc + 4
+            }
+        }
+        Instruction::LoadDelayTimer(x) => {
+            self.v[x] = self.delay_timer;
+            self.pc + 2 
+        }
+        Instruction::WaitForKeyPress(x) => {
+            if let Some(key) = self.keyboard.pressed_key() {
+                self.v[x] = key;
+                self.pc + 2 
+            } else {
+                self.pc 
+            }
+        }
+        Instruction::SetDelayTimer(x) => {
+            self.delay_timer = self.v[x];
+            self.pc + 2
+        }
+        Instruction::SetSoundTimer(x) => {
+            self.sound_timer = self.v[x];
+            self.pc+ 2
+        }
+        Instruction::AddToI(x) => {
+            self.i += self.v[x] as u16;
+            self.pc + 2
+        }
+        Instruction::LoadSprite(x) => {
+            self.i = self.v[x] as u16 * 5;
+            self.pc + 2
+        }
+        Instruction::BCDRepresentation(x) => {
+            self.memory[self.i as usize] = self.v[x] / 100;
+            self.memory[self.i as usize + 1] = (self.v[x] / 10) % 10;
+                self.memory[self.i as usize + 2] = (self.v[x] % 100) % 10;
+                self.pc + 2
+        } 
+        Instruction::StoreRegisters(x) => {
+            for i in 0..=x {
+                self.memory[self.i as usize + i] = self.v[i]
+            }
+            self.i += x as u16 + 1;
+            self.pc + 2
+        }
+        Instruction::LoadRegisters(x) => {
+            for i in 0..=x {
+                self.v[i] = self.memory[self.i as usize + i];
+            }
+            self.i += x as u16 + 1;
+            self.pc + 2
+        }
+    };
+}
