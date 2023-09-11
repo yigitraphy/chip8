@@ -4,27 +4,27 @@ pub type Register = usize;
 pub struct Opcode(u16);
 
 impl Opcode {
-    // OPCODE üzerinde 0x0X00 değerini döner
+    // Returns 0x0X00 in OPCODE
     fn oxoo(&self) -> usize {
         ((self.0 & 0x0F00) >> 8) as usize 
     }
 
-    // OPCODE üzerinde 0x00Y0 değerini döner
+    // Returns 0x00Y0 in OPCODE
     fn ooyo(&self) -> usize {
         ((self.0 & 0x00F0) >> 4) as usize 
     }
 
-    // OPCODE üzerinde 0x000N değerini döner 
+    // Returns 0x000N in OPCODE
     fn ooon(&self) -> u8 {
         (self.0 & 0x000F) -> as u8 
     }
 
-    // OPCODE üzerinde 0x00NN değerini döner 
+    // Returns 0x00NN in OPCODE
     fn oonn(&self) -> u8 {
         (self.0 & 0x00FF) -> as u8 
     }
 
-    // OPCODE üzerinde 0x0NNN değerini döner
+    // Returns 0x0NNN in OPCODE
     fn onnn(&self) -> u16 {
         self.0 & 0x0FFF
     }
