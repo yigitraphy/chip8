@@ -69,11 +69,11 @@ pub enum Instruction {
     WaitForKeyPress(Register),                                 //  Wait until a key is pressed and store its value
     SetDelayTimer(Register),                                   //  Set the delay timer to the value in the specified register
     SetSoundTimer(Register),                                   //  Set the sound timer to the value in the specified register
-    AddToI(Register),                                          //  Add the value in the specified register to the I register
-    LoadSprite(Register),                                      //  Load the address of the sprite for the specified digit into the I register
+    AddToI(Register),                                          //  Add the value in the specified register to the register
+    LoadSprite(Register),                                      //  Load the address of the sprite for the specified digit into the register
     BCDRepresentation(Register),                               //  Convert the value in the specified register to BCD representation in memory
-    StoreRegisters(Register),                                  //  Store registers V0 through Vx in memory starting at address I
-    LoadRegisters(Register),                                   //  Load registers V0 through Vx from memory starting at address I
+    StoreRegisters(Register),                                  //  Store registers V0 through Vx in memory starting at address 
+    LoadRegisters(Register),                                   //  Load registers V0 through Vx from memory starting at address
 } 
 
 impl Instruction {
