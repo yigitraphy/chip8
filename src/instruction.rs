@@ -40,40 +40,40 @@ pub type Address = u16;
 pub type Register = usize;
 
 pub enum Instruction {
-    ClearDisplay,                                              //  
-    Return,                                                    //
-    Jump(Address),                                             //
-    Call(Address),                                             //
-    SkipIfEqualsByte(Register, u8),                            //
-    SkipIfNotEqualsByte(Register, u8),                         //
-    SkipIfEqual(Register, Register),                           //
-    LoadByte(Register, u8),                                    //
-    AddByte(Register, u8),                                     //
-    Move(Register, Register),                                  //
-    Or(Register, Register),                                    //
-    And(Register, Register),                                   //
-    Xor(Register, Register),                                   //
-    Add(Register, Register),                                   //
-    Sub(Register, Register),                                   //
-    ShiftRight(Register),                                      //
-    ReverseSub(Register, Register),                            //
-    ShiftLeft(Register),                                       //
-    SkipIfNotEqualsByte(Register, Register),                   //
-    LoadI(Address),                                            //
-    JumpPlusZero(Address),                                     //
-    Random(Register, u8),                                      //
-    Draw(Register, Register, u8),                              //
-    SkipIfPressed(Register),                                   //
-    SkipIfNotPressed(Register),                                //
-    LoadDelayTimer(Register),                                  //
-    WaitForKeyPress(Register),                                 //
-    SetDelayTimer(Register),                                   //
-    SetSoundTimer(Register),                                   //
-    AddToI(Register),                                          //
-    LoadSprite(Register),                                      //
-    BCDRepresentation(Register),                               // 
-    StoreRegisters(Register),                                  //
-    LoadRegisters(Register),                                   //
+    ClearDisplay,                                              //  Clear the display.
+    Return,                                                    //  Return from a subroutine
+    Jump(Address),                                             //  Jump to the specified address
+    Call(Address),                                             //  Call a subroutine at the specified address and store the program counter
+    SkipIfEqualsByte(Register, u8),                            //  Skip the next instruction if the register is equal to the specified value
+    SkipIfNotEqualsByte(Register, u8),                         //  Skip the next instruction if the register is not equal to the specified value
+    SkipIfEqual(Register, Register),                           //  Skip the next instruction if two registers are equal
+    LoadByte(Register, u8),                                    //  Load the specified value into the register
+    AddByte(Register, u8),                                     //  Add the specified value to the register
+    Move(Register, Register),                                  //  Copy the value from one register to another
+    Or(Register, Register),                                    //  Perform a bitwise OR operation between two registers
+    And(Register, Register),                                   //  Perform a bitwise AND operation between two registers
+    Xor(Register, Register),                                   //  Perform a bitwise XOR operation between two registers
+    Add(Register, Register),                                   //  Perform an addition operation between two registers
+    Sub(Register, Register),                                   //  Perform a subtraction operation between two registers
+    ShiftRight(Register),                                      //  Shift the value in the specified register one bit to the right
+    ReverseSub(Register, Register),                            //  Subtract one register from another, and save the overflow status
+    ShiftLeft(Register),                                       //  Shift the value in the specified register one bit to the left
+    SkipIfNotEqualsByte(Register, Register),                   //  Skip the next instruction if two registers are not equal
+    LoadI(Address),                                            //  Load the specified address into the I register
+    JumpPlusZero(Address),                                     //  Jump to the specified address plus the value in V0
+    Random(Register, u8),                                      //  Load a random value into the specified register
+    Draw(Register, Register, u8),                              //  Draw a sprite on the screen
+    SkipIfPressed(Register),                                   //  Skip the next instruction if the specified key is pressed
+    SkipIfNotPressed(Register),                                //  Skip the next instruction if the specified key is not pressed
+    LoadDelayTimer(Register),                                  //  Load the value of the delay timer into the specified register
+    WaitForKeyPress(Register),                                 //  Wait until a key is pressed and store its value
+    SetDelayTimer(Register),                                   //  Set the delay timer to the value in the specified register
+    SetSoundTimer(Register),                                   //  Set the sound timer to the value in the specified register
+    AddToI(Register),                                          //  Add the value in the specified register to the I register
+    LoadSprite(Register),                                      //  Load the address of the sprite for the specified digit into the I register
+    BCDRepresentation(Register),                               //  Convert the value in the specified register to BCD representation in memory
+    StoreRegisters(Register),                                  //  Store registers V0 through Vx in memory starting at address I
+    LoadRegisters(Register),                                   //  Load registers V0 through Vx from memory starting at address I
 } 
 
 impl Instruction {
