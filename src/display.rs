@@ -75,7 +75,6 @@ pub fn draw_screen(&mut self) {
   }
 }
 
-
 impl AsMut<Window> for Display {
     fn as_mut(&mut self) -> &mut Window {
         &mut self.window
