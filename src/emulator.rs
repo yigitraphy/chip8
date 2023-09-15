@@ -155,7 +155,7 @@ fn instruction_run(&mut self, instruction: Instruction) {
         }
         Instruction::JumpPlusZero(addr) => addr + (self.v[0] as u16),
         Instruction::Random(x, val) => {
-            self.v[x] val & rand::random::<u8>();
+            self.v[x] = val & rand::random::<u8>();
             self.pc + 2
         }
         Instruction::Draw(x, y, n) => {
