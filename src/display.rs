@@ -6,7 +6,7 @@ const FOREGROUND_COLOR: u32 = 0x5294e2;
 const BACKGROUND_COLOR: u32 = 0x282c34;
 
 pub struct Display {
-    buffer: [[u8: WIDTH]; HEIGHT],
+    buffer: [[u8; WIDTH]; HEIGHT],
     window: Window,
 }
 
