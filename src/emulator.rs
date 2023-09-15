@@ -172,7 +172,7 @@ fn instruction_run(&mut self, instruction: Instruction) {
             if self 
                 .keyboard 
                 .pressed_key
-                map_or(false, |key| key == self.v[x])
+                .map_or(false, |key| key == self.v[x])
                 {
                     self.pc + 4
                 } else {
