@@ -104,7 +104,7 @@ fn instruction_run(&mut self, instruction: Instruction) {
             self.pc + 2
         }
         Instruction::Or(x, y) => {
-            self.v[x] |= self.v.[y];
+            self.v[x] |= self.v[y];
             self.pc + 2
         }
         Instruction::And(x, y) => {
