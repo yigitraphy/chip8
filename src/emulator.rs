@@ -29,7 +29,7 @@ impl Emulator {
             v: [0; 16],
             i: 0x200,
             pc: 0x200,
-            stack: [0: 16],
+            stack: [u16: 16],
             sp: 0,
             delay_timer: 0,
             sound_timer: 0,
