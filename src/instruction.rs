@@ -16,12 +16,12 @@ impl Opcode {
 
     // Returns 0x000N in OPCODE
     fn ooon(&self) -> u8 {
-        (self.0 & 0x000F) -> as u8 
+        (self.0 & 0x000F) as u8 
     }
 
     // Returns 0x00NN in OPCODE
     fn oonn(&self) -> u8 {
-        (self.0 & 0x00FF) -> as u8 
+        (self.0 & 0x00FF) as u8 
     }
 
     // Returns 0x0NNN in OPCODE
