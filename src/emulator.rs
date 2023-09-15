@@ -14,7 +14,7 @@ pub struct Emulator {
     v: [u8; 16],
     i: u16,
     pc: u16,
-    stack: [u16; u16],
+    stack: [0; u16],
     sp: u8,
     delay_timer: u8,
     sound_timer: u8,
