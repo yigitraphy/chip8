@@ -15,7 +15,7 @@ use std::env::args;
 
 fn main() {
     Emulator::new()
-        .rom_oku(args().nth(1).unwrap_or_else(|| "brix.ch8".to_string()))
+        .rom_read(args().nth(1).unwrap_or_else(|| "brix.ch8".to_string()))
         .expect("Error reading ROM")
         .emulate();
 }
